@@ -171,4 +171,122 @@ v_a_selection
 vector_r <- vector_a[v_a_selection]
 vector_r
 
+# Dataframes
 
+# Vector from 10 to 21
+x <- 10:21
+# Function letters from index
+y <- letters[x]
+y
+
+# Definition of vectors
+name <- c("Mercury", "Venus", "Earth", 
+          "Mars", "Jupiter", "Saturn", 
+          "Uranus", "Neptune")
+type <- c("Terrestrial planet", 
+          "Terrestrial planet", 
+          "Terrestrial planet", 
+          "Terrestrial planet", "Gas giant", 
+          "Gas giant", "Gas giant", "Gas giant")
+diameter <- c(0.382, 0.949, 1, 0.532, 
+              11.209, 9.449, 4.007, 3.883)
+rotation <- c(58.64, -243.02, 1, 1.03, 
+              0.41, 0.43, -0.72, 0.67)
+rings <- c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+
+# Create a data frame from the vectors
+planets_df <- data.frame(name, type, diameter, rotation, rings)
+planets_df
+
+# Check the structure of planets_df
+str(planets_df)
+
+# Check the head of planets_df
+head(planets_df)
+
+# Print out diameter of Mercury (row 1, column 3)
+planets_df[1,3]
+
+# Print out data for Mars (entire fourth row)
+planets_df[4,]
+
+# Select first 5 values of diameter column
+planets_df[1:5, "diameter"]
+
+# Select the rings variable from planets_df
+rings_vector <- planets_df$rings
+
+# Print out rings_vector
+rings_vector
+
+# Adapt the code to select all columns for planets with rings
+planets_df[rings_vector, ]
+
+# Select planets with diameter < 1
+subset(planets_df, diameter < 1)
+
+# Dataframe Functions
+
+a <- c(100, 10, 1000)
+order(a)
+a[order(a)]
+
+# Use order() to create positions
+positions <-  order(planets_df$diameter)
+
+# Use positions to sort planets_df
+planets_df[positions,]
+
+# More Examples
+
+df <- data.frame(age=10:21, 
+                 group=letters[x]
+                )
+df
+
+# Add Column
+sex <- c("H","M","H","M","H","H","M","M","H","M","H","M")
+df$sex = sex
+
+# Delete Column
+df$sex = NULL
+
+df
+
+# Select
+df$group
+df$age[6:10]
+
+# Lists
+
+# Vector with numerics from 1 up to 10
+my_vector <- 1:10 
+
+# Matrix with numerics from 1 up to 9
+my_matrix <- matrix(1:9, ncol = 3)
+
+# Construct list with these different elements:
+my_list <- list(my_vector, my_matrix)
+
+# Adapt list() call to give the components names
+names(my_list) <- c("vec", "mat")
+
+my_list
+
+a_list <- list(vector = my_vector, matrix = my_matrix)
+a_list
+
+a_list$vector
+a_list$vector[2:4]
+a_list[[2]][3]
+
+# Other Examples
+
+list_2 <- list(string = "Israel", 
+              numeric = 3,
+              vector = c(4, 7, 9),
+              matrix = matrix(1:9, nrow = 3, ncol = 3),
+              list_3 = list(a = "Hello", b = "Uriel")
+)
+class(list_2)
+list_2
