@@ -1,3 +1,3 @@
-# R.iu
+# r.iu
 
 <hr1>R for Data Science</hr1>
