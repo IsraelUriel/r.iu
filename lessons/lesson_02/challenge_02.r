@@ -35,3 +35,13 @@ es.teams <- ul_df %>%
            arrange(desc(HGP)) %>%
            select(HomeTeam, HGP)
 
+# Solucion
+
+ul_df %>% filter(FTR == "H") %>%
+  group_by(HomeTeam) %>%
+  summarize(FTHG = sum(FTHG), FTAG = sum(FTAG)) %>%
+  mutate(FTTOT = FTHG + FTAG, FT_prop = FTHG / FTTOT) %>%
+  arrange(desc(FT_prop)) %>%
+  select(HomeTeam, FT_prop) %>%
+  filter(FT_prop >= 0.85)
+
