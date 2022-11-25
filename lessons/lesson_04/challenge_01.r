@@ -51,7 +51,8 @@ x <- round(x * 100, 2)
 sprintf('R: %0.2f%%', x)
 
 # e)
-x <- pbinom(4, s, p, lower.tail = TRUE) - pbinom(2, s, p, lower.tail = TRUE)
+x <- pbinom(4, s, p, lower.tail = TRUE) - pbinom(1, s, p, lower.tail = TRUE)
+# P(X <= b) - P(X <= a) = P(a < X <= b)
 x <- round(x * 100, 2)
 sprintf('R: %0.2f%%', x)
 
