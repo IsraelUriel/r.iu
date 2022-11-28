@@ -3,9 +3,7 @@ Una maquina de ensamblaje, tiene una probabilidad de 0.15 de ensamblar de forma 
 Si la producción de una unidad es totaltamente independiente de las demás y al día se producen 10 unidades:
   
 set.seed(0202)
-
 a) Grafica la función de distribución de la variable aleatoria. (Asume que se obtienen 10,000 muestras)
-
 b) ¿Cuál es la probabilidad de que se produzcan dos unidades defectuosas?
   
 c) ¿Cuál es la probabilidad de que a lo mucho 4 unidades sean defectuosas?
@@ -25,7 +23,7 @@ set.seed(0202)
 
 # a)
 
-bnimom <- rbinom(n, s, p)
+binom <- rbinom(n, s, p)
 
 barplot(table(binom),length(binom),
         main = 'Distribución Aleatoria', 
@@ -41,12 +39,13 @@ sprintf('R: %0.2f%%', x)
 # 82.02%
 
 # c)
-x <- dbinom(4, s, p)
+x <- pbinom(4, s, p)
 x <- round(x * 100, 2)
 sprintf('R: %0.2f%%', x)
 
 # d)
 x <- pbinom(3, s, p, lower.tail = TRUE) 
+# 1 - pbinom(2, s, p)
 x <- round(x * 100, 2)
 sprintf('R: %0.2f%%', x)
 
