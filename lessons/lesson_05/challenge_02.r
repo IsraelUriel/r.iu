@@ -29,18 +29,65 @@ summary(mpg)
 str(mpg)
 glimpse(mpg)
 
-# A) ----------------------------------------------------------------------
-
-x <- mpg$hwy
-
 # Nivel de Confianza: 95% -> 0.05
 nc <- 0.05
 
+# A) ----------------------------------------------------------------------
+
+# Con base en los datos, existe evidencia estadística para concluir que, en promedio, los coches 
+# producidos entre 1999 y 2008 podían recorrer más de 22.8 millas de carretera por galón (hwy)?
+
+x <- mpg$hwy
+
+#Hipótesis:
 # Ho: mu <= 22.8
 # Ha: mu > 22.8
+
 mu <- 22.8
 
-t.test(x = x, alternative = 'greater', mu)
+p.value <- t.test(x = x, alternative = 'greater', mu = mu)$p.value
 
+if (p.value >= nc) { 
+  cat('R: No Se Rechaza:', p.value, ' >= ', nc)
+} else {
+  cat('R: Se Rechaza:', p.value, ' >= ', nc)
+} 
 
-p.value <- t.test(x, alternative = 'greater', mu)$p_value
+  
+# B) ----------------------------------------------------------------------
+
+# Con base en los datos, existe evidencia estadística para concluir que, en promedio, el desplazamiento 
+# del motor en litros (displ) para los coches producidos entre 1999 y 2008 era mayor o igual 3.7 litros?
+
+x <- mpg$displ
+
+#Hipótesis:
+# Ho: mu >= 3.7
+# Ha: mu < 3.7
+
+mu <- 3.7
+
+p.value <- t.test(x = x, alternative = 'greater', mu = mu)$p.value
+
+if (p.value >= nc) { 
+  cat('R: No Se Rechaza:', p.value, ' >= ', nc)
+} else {
+  cat('R: Se Rechaza:', p.value, ' >= ', nc)
+} 
+
+# C) ----------------------------------------------------------------------
+
+# Con base en los datos, existe evidencia estadística para concluir que, en promedio, los motores con 4 
+# cilindros (cyl = 4) tienen un mayor rendimiento en millas de carretera por galón (hwy) que los motores 
+# con 6 cilindros (cyl = 6)
+
+x <- mpg[mpg$cyl == 4, 'hwy']
+y <- mpg[mpg$cyl == 6, 'hwy']
+var.test(x, y, alternative = 'greater', ratio = 1)
+
+t.test(mpg[mpg$cyl == 4, 'hwy'],
+       mpg[mpg$cyl == 6, 'hwy'],
+       alternative = 'greater',
+       mu = 0,
+       var.equal = TRUE)
+
