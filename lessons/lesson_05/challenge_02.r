@@ -48,9 +48,9 @@ mu <- 22.8
 p.value <- t.test(x = x, alternative = 'greater', mu = mu)$p.value
 
 if (p.value >= nc) { 
-  cat('R: No Se Rechaza:', p.value, ' >= ', nc)
+  cat('R: No Se Rechaza Ho:', p.value, '>=', nc)
 } else {
-  cat('R: Se Rechaza:', p.value, ' >= ', nc)
+  cat('R: Se Rechaza Ho:', p.value, '<', nc)
 } 
 
   
@@ -70,9 +70,9 @@ mu <- 3.7
 p.value <- t.test(x = x, alternative = 'greater', mu = mu)$p.value
 
 if (p.value >= nc) { 
-  cat('R: No Se Rechaza:', p.value, ' >= ', nc)
+  cat('R: No Se Rechaza Ho:', p.value, '>=', nc)
 } else {
-  cat('R: Se Rechaza:', p.value, ' >= ', nc)
+  cat('R: Se Rechaza: Ho', p.value, '<', nc)
 } 
 
 # C) ----------------------------------------------------------------------
@@ -81,13 +81,20 @@ if (p.value >= nc) {
 # cilindros (cyl = 4) tienen un mayor rendimiento en millas de carretera por galón (hwy) que los motores 
 # con 6 cilindros (cyl = 6)
 
-x <- mpg[mpg$cyl == 4, 'hwy']
-y <- mpg[mpg$cyl == 6, 'hwy']
+#Hipótesis:
+# Ho: (cyl = 4) <= (cyl = 6)
+# Ha: (cyl = 4) > (cyl = 6)
+
+x <- unlist(mpg[mpg$cyl == 4, 'hwy'], use.name = FALSE)
+y <- unlist(mpg[mpg$cyl == 6, 'hwy'], use.name = FALSE)
 var.test(x, y, alternative = 'greater', ratio = 1)
 
-t.test(mpg[mpg$cyl == 4, 'hwy'],
-       mpg[mpg$cyl == 6, 'hwy'],
-       alternative = 'greater',
-       mu = 0,
-       var.equal = TRUE)
+p.value <- t.test(x, y, alternative = 'greater', mu = 0, var.equal = TRUE)$p.value
+
+if (p.value >= nc) { 
+  cat('R: No Se Rechaza Ho:', p.value, '>=', nc)
+} else {
+  cat('R: Se Rechaza: Ho', p.value, '<', nc)
+} 
+
 
