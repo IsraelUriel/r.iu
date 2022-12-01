@@ -236,6 +236,13 @@ boxplot(log(diamonds$carat))
 boxplot(log(carat) ~ cut,
         data = diamonds)
 
-#
+anova <- aov(log(carat) ~ color,
+    data = diamonds)
 
-#
+summary(anova)
+
+
+
+
+# IMPORTANTE :  el contraste de hipótesis nos sirve justamente para identificar si rechazamos o no el planteamiento.
+# La redacción propone una seria de planteamientos que se asumen como verdaderos, hasta que se demuestra la contrario.
