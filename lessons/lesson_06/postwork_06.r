@@ -1,4 +1,3 @@
-
 # Instructions: -----------------------------------------------------------
 
 "
@@ -21,6 +20,7 @@ library('ggthemes')
 df <- read.csv('advertising.csv', header = TRUE)
 str(df)
 glimpse(df)
+View(df)
 
 # Data Clean Up
 # Selecting Variables
@@ -69,14 +69,14 @@ sample %>%
   ggplot(aes(x = x1, y = y)) +
   geom_point(aes(color = resid(m2)),
              alpha = 0.25,
-             show.legend = FALSE) +
+             show.legend = TRUE) +
   geom_abline(intercept = m2$coeff[1],
               slope = m2$coeff[2],
               color = '#9A35CD',
               alpha = 0.5,
               lwd = 1) +
 
-  labs(x = 'Sales', y = 'TV') +
+  labs(x = 'TV', y = 'Sales') +
   theme_tufte() +
   geom_rangeframe() + 
   theme(panel.grid = element_line(color = '#9FDCE4',
@@ -102,7 +102,7 @@ sample %>%
               alpha = 0.5,
               lwd = 1) +
   
-  labs(x = 'Sales', y = 'Radio') +
+  labs(x = 'Radio', y = 'Sales') +
   theme_tufte() +
   geom_rangeframe() + 
   theme(panel.grid = element_line(color = '#9FDCE4',
@@ -145,8 +145,9 @@ if (p.value < nc) {
 
 # Predicción
 
+
 prediction.data <- data.frame(
-  TV = c(151.5, 180.8, 18.7, 170.5, 240.9)
+  TV = c(251.5, 280.8, 280.7, 270.5, 340.9)
 )
 
 # a un nivel de confianza de 0.95
@@ -156,26 +157,24 @@ prediction.data <- predict(m2, newdata = prediction.data, interval = "confidence
 
 # Conclusion
 # De acuerdo con el modelo de Predicción; si se aumenta la inversión de propaganda
-# por la TV, se aumenta las unidades de venta entre 16.65 a 17.34 unidades 
+# por la TV, se aumenta las unidades de venta entre 25.09 a 26.67 unidades 
 
-prediction_m <- cbind(sample, prediction.data)
+sample.tv <- select(sample,'Sales','TV')
+
+prediction_m <- cbind(sample.tv, prediction.data)
 
 prediction_m %>%
-  ggplot(aes(x = x1, y = y)) +
+  ggplot(aes(x = TV, y = Sales)) +
   geom_point(aes(color = resid(m2)),
              alpha = 0.25,
              show.legend = FALSE) +
-  geom_abline(intercept = m2$coeff[1],
-              slope = m2$coeff[2],
-              color = '#9A35CD',
-              alpha = 0.5,
-              lwd = 1) +
   
-  labs(x = 'Sales', y = 'TV') +
+  
+  labs(x = 'TV', y = 'Sales') +
   theme_tufte() +
   geom_rangeframe() + 
   theme(panel.grid = element_line(color = '#9FDCE4',
                                   size = .25,
                                   linetype = 2),
         plot.margin = margin(1,1,1,1, 'cm')) +
-  geom_smooth(method = lm, se = TRUE, level = 0.95)
+  geom_smooth(method = lm, se = TRUE, level = 0.95, color = '#9A35CD')
