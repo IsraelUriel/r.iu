@@ -128,7 +128,7 @@ boxplot(iris$Sepal.Width ~ factor(iris$Species),
 
 x <- unlist(iris[iris$Species == 'virginica', 'Sepal.Width'], use.names = FALSE) 
 y <- unlist(iris[iris$Species == 'versicolor', 'Sepal.Width'], use.names = FALSE)
-z <- unlist(iris[iris$Species == 'virginica', 'Sepal.Width'], use.names = FALSE)
+z <- unlist(iris[iris$Species == 'setosa', 'Sepal.Width'], use.names = FALSE)
 
 samples <- data.frame(y = c(x,y,z),
   group = c('virginica', 'versicolor', 'setosa'))
