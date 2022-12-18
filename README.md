@@ -310,7 +310,82 @@ transform(table(df$nse5f, df$IA),
 
 ### 4. Planteamiento de hipótesis estadísticos y concluye sobre ellos para entender el problema en México
 
+```R
+df_2$ln_als[is.na(df_2$ln_als)]<-mean(df_2$ln_als,na.rm=TRUE)
+df_2$ln_alns[is.na(df_2$ln_alns)]<-mean(df_2$ln_alns,na.rm=TRUE)
 
+"La mayoría de las personas afirman que los hogares con menor nivel socioeconómico () tienden a
+gastar más en productos no saludables que las personas con mayores niveles socioeconómicos y que esto, entre otros
+determinantes, lleva a que un hogar presente cierta inseguridad alimentaria"
+var.test(df_2[df_2$nse5f < 3, "ln_alns"],
+         df_2[df_2$nse5f > 3, "ln_alns"],
+         ratio = 1, alternative = "two.sided")
+
+"Planteamiento de hipótesis:
+Ho: ln_alns_nse5f1-2 <= ln_alns_nse5f4-5
+Ha: ln_alns_nse5f1-2 > ln_alns_nse5f4-5"
+
+t.test(x = df_2[df_2$nse5f > 3, "ln_alns"],
+       y = df_2[df_2$nse5f < 3, "ln_alns"],
+       alternative = "greater", mu = 0, var.equal = FALSE) #p-value < 2.2e-16
+#A nivel de confianza estándar, EEE para rechazar la Ho, el gasto en productos no saludables en los hogares
+#con menor nivel socioeconómico es mayor al gasto de los hogares con mayor nivel socioeconómico
+
+```
+
+### 5.Estima un modelo de regresión, lineal o logístico, para identificiar los determinantes de la inseguridad alimentaria en México
+attach(df_2)
+#Regresión logística
+#IA en relación con años de educación
+y = df_2$IA
+x = df_2$añosedu
+
+logistic.1 <- glm(y ~ x, data = df.b, family = binomial)
+plot(logistic.1)
+summary(logistic.1)
+
+par(mfrow = c(1, 1))
+plot(IA ~ añosedu, data=df.b, xlim = c(0,50))
+curve(predict(logistic.1, newdata = data.frame(x), type = "response"),add = TRUE)
+
+#IA en relación con número de personas que viven en el hogar
+x = df.b$numpeho
+logistic.1 <- glm(y ~ x, data = df.b, family = binomial)
+
+summary(logistic.1)
+
+plot(IA ~ numpeho, data=df.b, xlim = c(0,20))
+curve(predict(logistic.1, newdata = data.frame(x), type = "response"),add = TRUE)
+```
+
+### 6.Escribe tu análisis en un archivo README.MD y tu código en un script de R y publica ambos en un repositorio de Github.
+
+
+
+" Comprobar : La mayoría de las personas afirman que los hogares
+con menor nivel socioeconómico tienden a gastar más en productos no saludables que las personas
+con mayores niveles socioeconómicos y que esto, entre otros determinantes, lleva a que un hogar
+presente cierta inseguridad alimentaria"
+
+dfc.summ <- df %>%
+  select(nse5f, ln_als, ln_alns, IA) %>%
+  mutate(sumaing = ln_als + ln_alns) %>%
+  group_by(nse5f) %>%
+  summarize(total_as = sum(ln_als),
+            total_ans = sum(ln_alns),
+            pctg_ans = (total_ans / ( total_as + total_ans )))
+head(dfc.summ)
+"nse5f      total_as total_ans pctg_ans
+  <fct>         <dbl>     <dbl>    <dbl>
+1 Bajo         50478.    34804.    0.408
+2 Medio Bajo   50752.    34345.    0.404
+3 Medio        50617.    34036.    0.402
+4 Medio Alto   49330.    33169.    0.402
+5 Alto         46391.    31981.    0.408"
+
+# En esa zona del país la gente dedica dos quintas partes de su gasto en alimentos a comprar alimentos no saludables (pctg_ans).
+# Y en proporción sobre el gasto toal (total_as + total_ans), se puede ver que no hay diferencia entre lo que se destina a la compra
+# de Alimentos No Saludables
 
 
 
