@@ -191,6 +191,11 @@ ggplot(df, aes(x = IA, fill = IA)) +
 
 boxplot(ln_als ~ nse5f,data = df)
 boxplot(ln_alns ~ nse5f,data = df)
+
+#De acuerdo a la interpretación de los bloxplots nos muestra una disperción
+#elevada de los datos con respecto a la media, lo cual nos da un indicativo
+#de que por su elevada variabilidad la correlación podría ser baja.
+
 </pre>
 </code>
 
@@ -200,9 +205,12 @@ boxplot(ln_alns ~ nse5f,data = df)
 <code>
 <pre>
 #Función que nos permite generar un correlograma asociando las variables: 
-#Nivel Socio encónomico y gastos en alimentos saludables y no saludables.
+#Nivel Socioencónomico y gastos en alimentos saludables y no saludables.
 pairs(~ nse5f + ln_als + ln_alns, 
       data = df, gap = 0.4, cex.labels = 1.5)
+# Con base en estas gráficas se puede inferir que no hay correlación fuerte entre el gasto en alimentos
+# saludables y no saludables con relación al nivel socioeconómico, ya que se ven gráficas con valores
+# muy dispersos.    
 
 #Tranformación del conjunto de datos:
 #Se seleccionan las variables a utilizarse,
@@ -220,6 +228,11 @@ nse5f  -- 1.0000 -- 0.3459 	--  0.2175
 ln_als  --- 0.3459 -- 1.0000 -- 0.2742
 ln_alns -- 0.2175 -- 0.2742 -- 1.0000
 "
+# En este análisis se puede ver que las variables del gasto en alimentos saludables y no saludables 
+# tienen una correlación positiva, donde tenemos que el 34.59 % del gasto en alimentos saludables
+# se explica por el nivel socioeconómico y el 21.75 % del gasto en alimentos no saludables se explica 
+# con base en el nivel socioeconómico.
+
 
 #
 prop.table(table(df$nse5f, df$refin),1)
