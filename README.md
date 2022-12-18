@@ -21,28 +21,35 @@ La base de datos contiene las siguientes variables:
 ### Diccionario de Datos:
 
  A) nse5f (Nivel socieconómico del hogar): 1 "Bajo", 2 "Medio bajo", 3 "Medio", 4 "Medio alto", 5 Alto
+ 
  B) area (Zona geográfica): 0 "Zona urbana", 1 "Zona rural"
+ 
  C) numpeho (Número de persona en el hogar)
+ 
  D) refin (Recursos financieros distintos al ingreso laboral): 0 "no", 1 "sí"
+ 
  E) edadjef (Edad del jefe/a de familia)
+ 
  F) sexojef (Sexo del jefe/a de familia): 0 "Hombre", 1 "Mujer"
+ 
  G) añosedu (Años de educación del jefe de familia)
+ 
  H) ln_als (Logarítmo natural del gasto en alimentos saludables)
+ 
  I) ln_alns (Logarítmo natural del gasto en alimentos no saludables)
+ 
  J) IA (Inseguridad alimentaria en el hogar): 0 "No presenta IA", 1 "Presenta IA"
+
 
 ### Planteamiento del Problema
 
 #### Librerias empleadas:
-<pre>
-  <code>
+```R
 library(dplyr)
 library(DescTools)
 library(ggplot2)
 library(zoo)
-  </code>
-</pre>
-
+```
 ### Carga de Informacion
 <pre>
 <code>
