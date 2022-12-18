@@ -234,7 +234,7 @@ ln_alns -- 0.2175 -- 0.2742 -- 1.0000
 # con base en el nivel socioeconómico.
 
 
-#
+#Función que nos permite relacionar las probabilidades de correlación entre las variables
 prop.table(table(df$nse5f, df$refin),1)
 "                  No        Si
   Bajo       0.7964552 0.2035448
@@ -242,19 +242,33 @@ prop.table(table(df$nse5f, df$refin),1)
   Medio      0.8016340 0.1983660
   Medio Alto 0.8166519 0.1833481
   Alto       0.8481507 0.1518493"
-</pre>
-</code>
 
 #En el nivel Bajo existe un 79.6% de probabilidad que el hogar no cuente con recursos extra pero un 20.35% de que si exista
 #En el nivel Medio Bajo existe un 79.3% de probabilidad que el hogar no cuente con recursos extra pero un 20.7% de que si exista
 #En el nivel Medio existe un 80.16% de probabilidad que el hogar no cuente con recursos extra pero un 19.83% de que si exista
 #En el nivel Medio Alto existe un 81.66% de probabilidad que el hogar no cuente con recursos extra pero un 18.33% de que si exista
 #En el nivel Alto existe un 84.81% de probabilidad que el hogar no cuente con recursos extra pero un 15.18% de que si exista
+
+#Función que nos permite obtener las frecuencias de las variables con respecto a la muestra. 
+#Se analiza la relación entre la variable de nivel socioecnómico y el recursos financiero
 transform(table(df$nse5f, df$refin),
           rel.freq=prop.table(Freq), 
           cum.freq=cumsum(prop.table(Freq)))
+"
+         Var1 Var2 Freq   rel.freq  cum.freq
+1        Bajo   No 7055 0.17287853 0.1728785
+2  Medio Bajo   No 6788 0.16633586 0.3392144
+3       Medio   No 6672 0.16349335 0.5027077
+4  Medio Alto   No 6454 0.15815139 0.6608591
+5        Alto   No 6077 0.14891323 0.8097724
+6        Bajo   Si 1803 0.04418143 0.8539538
+7  Medio Bajo   Si 1772 0.04342179 0.8973756
+8       Medio   Si 1651 0.04045676 0.9378323
+9  Medio Alto   Si 1449 0.03550687 0.9733392
+10       Alto   Si 1088 0.02666079 1.0000000
+"
 
-
+#Se analiza la relación entre la variable de nivel socioecnómico y la inseguridad alimentaria
 prop.table(table(df$nse5f, df$IA),1)
 "              No Presenta IA Presenta IA
   Bajo            0.1290359   0.8709641
@@ -267,7 +281,8 @@ prop.table(table(df$nse5f, df$IA),1)
 #En el nivel Medio existe un 22.55% de probabilidad no tengan Inseguridad Alimentaria pero un 77.44% de que si exista
 #En el nivel Medio Alto existe un 32.46% de probabilidad que no tengan Inseguridad Alimentaria pero un 67.53% de que si exista
 #En el nivel Alto existe un 50.87% de probabilidad que no tengan Inseguridad Alimentaria pero un 49.12% de que si exista
-
+</pre>
+</code>
 
 
 
