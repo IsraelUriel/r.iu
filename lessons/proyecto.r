@@ -291,7 +291,7 @@ transform(table(df$nse5f, df$IA),
   curve(dnorm(x, mean = mean.alns, sd = sd.alns), from = 0, to = 10, 
         col='red', add = TRUE)
 }
-#Se observa que ambas variables presentan una distribución normal
+# Se observa que ambas variables presentan una distribución normal
 
 
 # 4. Planteamiento de hipótesis estadísticos y concluye sobre ello --------
