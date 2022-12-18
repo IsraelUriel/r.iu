@@ -51,22 +51,19 @@ library(ggplot2)
 library(zoo)
 ```
 ### Carga de Informacion
-<pre>
-<code>
+```R
 f <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-R-Santander-2022/main/Sesion-08/Postwork/inseguridad_alimentaria_bedu.csv")
 
 head(df,10) # Analizar los primeros 10 observaciones del conjunto de datos
 str(df) # Analizar el tipo de datos de las variables del conjunto de datos```
-</code>
-</pre>
+```
 
 ### Limpieza de Datos
 
 #### Transformación de datos:
 #####  Aplicación de factores
 
-<pre>
-<code>
+```R
 df$nse5f <- factor(df$nse5f, labels = c("Bajo", "Medio Bajo", "Medio", "Medio Alto", "Alto")) <br>
 df$area <- factor(df$area, labels = c("Zona Urbana", "Zona Rural")) <
 df$refin <- factor(df$refin, labels = c("No", "Si"))
@@ -74,8 +71,7 @@ df$sexojef <- factor(df$sexojef, labels = c("Hombre", "Mujer"))
 df$IA <- factor(df$IA, labels = c("No Presenta IA", "Presenta IA"))
 
 glimpse(df) # Analizar los factores aplicados
-</code>
-</pre>
+```
 
 ### 1.Plantea el problema del caso
 
@@ -83,18 +79,15 @@ Comprobar la relación entre el nivel socioeconómico de los hogares con los gas
 alimentos saludables y no saludables, así como si cuentan con recursos financieros extra,
 teniendo en cuenta si se presenta inseguridad alimentaria y los determinantes socioeconómicos asociados a ella
 
-<pre>
-<code>
+```R
 #reemplazo de valores NA en als y alns por los promedios sin casos NA
 df$ln_als[is.na(df$ln_als)]<-mean(df$ln_als,na.rm=TRUE)
 df$ln_alns[is.na(df$ln_alns)]<-mean(df$ln_alns,na.rm=TRUE)
-</code>
-</pre>
+```
 
 ### 2.Realiza un análisis descriptivo de la información
 
-<pre>
-<code>
+```R
 summary(df) # Resumen estadístico del conjunto de datos
 "
 nse5f               area          numpeho       refin         edadjef       sexojef         añosedu                   IA       
@@ -112,11 +105,9 @@ nse5f               area          numpeho       refin         edadjef       sexo
  Mean   :6.0665   Mean   :4.125  
  3rd Qu.:6.5439   3rd Qu.:4.248  
  Max.   :8.9699   Max.   :8.403"
- </pre>
-</code>
- 
- <pre>
-<code>
+```
+
+```R
 #Análisis de la Variable Nivel Socioeconómico
 freq <- table(df$nse5f) # Función que obtiene una tabla de frecuencias del conjunto de datos
 #Grafíca de barras que visualiza la distribución de la variable Nivel Socioeconómico
@@ -167,12 +158,9 @@ ggplot(df, aes(x = IA, fill = IA)) +
   theme_light()
 "No Presenta IA    Presenta IA 
         10781         30028 "
- </pre>
-</code>
-
+```
 ####  Medidas de tendencia central sobre las variables Alimentos Saludables y No Saludables
-<pre>
-<code>
+```R
 (mean.als <- mean(df$ln_als)) #6.066521
 (sd.als <- sd(df$ln_als)) #0.7387856
 (Mode(df$ln_als)[1]) # 6.066521
@@ -202,15 +190,12 @@ boxplot(ln_alns ~ nse5f,data = df)
 #De acuerdo a la interpretación de los bloxplots nos muestra una disperción
 #elevada de los datos con respecto a la media, lo cual nos da un indicativo
 #de que por su elevada variabilidad la correlación podría ser baja.
-
-</pre>
-</code>
+```
 
 
 ### 3. Calcula probabilidades que nos permitan entender el problema en México
 
-<code>
-<pre>
+```R
 #Función que nos permite generar un correlograma asociando las variables: 
 #Nivel Socioencónomico y gastos en alimentos saludables y no saludables.
 pairs(~ nse5f + ln_als + ln_alns, 
@@ -288,8 +273,43 @@ prop.table(table(df$nse5f, df$IA),1)
 #En el nivel Medio existe un 22.55% de probabilidad no tengan Inseguridad Alimentaria pero un 77.44% de que si exista
 #En el nivel Medio Alto existe un 32.46% de probabilidad que no tengan Inseguridad Alimentaria pero un 67.53% de que si exista
 #En el nivel Alto existe un 50.87% de probabilidad que no tengan Inseguridad Alimentaria pero un 49.12% de que si exista
-</pre>
-</code>
+
+#Se analiza la relación entre la variable de nivel socioecnómico y la inseguridad alimentaria
+transform(table(df$nse5f, df$IA),
+          rel.freq=prop.table(Freq), 
+          cum.freq=cumsum(prop.table(Freq)))
+
+"
+         Var1           Var2 Freq   rel.freq   cum.freq
+1        Bajo No Presenta IA 1143 0.02800853 0.02800853
+2  Medio Bajo No Presenta IA 1550 0.03798182 0.06599035
+3       Medio No Presenta IA 1877 0.04599476 0.11198510
+4  Medio Alto No Presenta IA 2566 0.06287829 0.17486339
+5        Alto No Presenta IA 3645 0.08931853 0.26418192
+6        Bajo    Presenta IA 7715 0.18905143 0.45323336
+7  Medio Bajo    Presenta IA 7010 0.17177583 0.62500919
+8       Medio    Presenta IA 6446 0.15795535 0.78296454
+9  Medio Alto    Presenta IA 5337 0.13077998 0.91374452
+10       Alto    Presenta IA 3520 0.08625548 1.00000000
+"
+
+#Gráfica que nos permite visualizar el comportamiento de la distribución de las
+"variables del gasto en los alimentos.
+{curve(dnorm(x, mean = mean.als, sd = sd.als), from = 0, to = 10, 
+       col='blue', main = "Densidad Normal:\nln_als y ln_alns",
+       ylab = "f(x)", xlab = "X")
+  legend(x = 8.5, y = 0.5, legend=c("ln_als", "ln_alns"),
+         col=c("blue", "red"), lty = 1, bty = "n", cex=0.8)
+  curve(dnorm(x, mean = mean.alns, sd = sd.alns), from = 0, to = 10, 
+        col='red', add = TRUE)
+}
+#Se observa que ambas variables presentan una distribución normal
+
+```
+
+
+### 4. Planteamiento de hipótesis estadísticos y concluye sobre ellos para entender el problema en México
+
 
 
 
