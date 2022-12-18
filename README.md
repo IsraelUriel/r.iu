@@ -656,44 +656,11 @@ plot(IA ~ ln_alns, data=df, xlim = c(0,1))
 
 dev.off()
 
-# De acuerdo a la interpretación que obtenemos de las gráficas, se puede dar una conclusión que la edad del jefe de familia y
-# el sexo de la familia no son determinantes para que se presente Inserguridad alimentaría. Por lo se observa que las determinantes
-# son el nivel socioeconómico, el área, el número de integrantes de la familia, los años de educación, los recursos financieros,
-# el gasto en alimento saludable
-
+# De acuerdo a la interpretación que obtenemos de las gráficas, se puede dar una conclusión que la edad del jefe de la familia y
+# el sexo del jefe de la familia no son determinantes para que se presente Inserguridad alimentaría. Por lo se observa que las determinantes
+# son el nivel socioeconómico, el área, el número de integrantes de la familia, los años de educación y los recursos financieros.
 
 ```
-
-### 6.Escribe tu análisis en un archivo README.MD y tu código en un script de R y publica ambos en un repositorio de Github.
-
-Comprobar : La mayoría de las personas afirman que los hogares
-con menor nivel socioeconómico tienden a gastar más en productos no saludables que las personas
-con mayores niveles socioeconómicos y que esto, entre otros determinantes, lleva a que un hogar
-presente cierta inseguridad alimentaria.
-
-```R
-dfc.summ <- df %>%
-  select(nse5f, ln_als, ln_alns, IA) %>%
-  mutate(sumaing = ln_als + ln_alns) %>%
-  group_by(nse5f) %>%
-  summarize(total_as = sum(ln_als),
-            total_ans = sum(ln_alns),
-            pctg_ans = (total_ans / ( total_as + total_ans )))
-head(dfc.summ)
-"nse5f      total_as total_ans pctg_ans
-  <fct>         <dbl>     <dbl>    <dbl>
-1 Bajo         50478.    34804.    0.408
-2 Medio Bajo   50752.    34345.    0.404
-3 Medio        50617.    34036.    0.402
-4 Medio Alto   49330.    33169.    0.402
-5 Alto         46391.    31981.    0.408"
-
-# En esa zona del país la gente dedica dos quintas partes de su gasto en alimentos a comprar alimentos no saludables (pctg_ans).
-# Y en proporción sobre el gasto toal (total_as + total_ans), se puede ver que no hay diferencia entre lo que se destina a la compra
-# de Alimentos No Saludables
-```
-
-
 
 
 
